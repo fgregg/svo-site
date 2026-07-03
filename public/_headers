@@ -1,0 +1,8 @@
+# Vendored libraries are versioned by content and never change — cache hard.
+/vendor/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Let anyone fetch the raw data cross-origin (this is the point — open data).
+/data/*
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=3600

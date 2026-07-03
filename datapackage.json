@@ -1,0 +1,491 @@
+{
+  "profile": "tabular-data-package",
+  "id": "https://doi.org/10.5281/zenodo.21152346",
+  "name": "vegetable-oil-fuel-properties",
+  "title": "Fuel and Chemical Properties of Vegetable Oils",
+  "description": "A compilation of the physical, chemical, and fuel properties of vegetable oils and animal fats, drawn from the research literature and assembled for the book SVO: Powering Your Vehicle with Straight Vegetable Oil by Forest Gregg. Each resource lists its literature sources in a Source(s) column.",
+  "homepage": "https://svo.bunkum.us/",
+  "licenses": [
+    {
+      "name": "CC-BY-4.0",
+      "path": "https://creativecommons.org/licenses/by/4.0/",
+      "title": "Creative Commons Attribution 4.0 International"
+    }
+  ],
+  "contributors": [
+    {
+      "title": "Forest Gregg",
+      "role": "author"
+    }
+  ],
+  "keywords": [
+    "vegetable oil",
+    "straight vegetable oil",
+    "SVO",
+    "biodiesel",
+    "fuel properties",
+    "kinematic viscosity",
+    "fatty acid profile",
+    "density"
+  ],
+  "resources": [
+    {
+      "name": "fatty-acid-profiles",
+      "path": "data/fatty_acid_profiles.csv",
+      "title": "Fatty Acid Profiles of Various Oils and Fats (% by weight)",
+      "profile": "tabular-data-resource",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "schema": {
+        "fields": [
+          {
+            "name": "Fat",
+            "type": "string"
+          },
+          {
+            "name": "Variety or processing",
+            "type": "string"
+          },
+          {
+            "name": "Myristic 14:0",
+            "type": "number"
+          },
+          {
+            "name": "Myristoleic 14:1",
+            "type": "number"
+          },
+          {
+            "name": "Palmitic 16:0",
+            "type": "number"
+          },
+          {
+            "name": "Palmitoleic 16:1",
+            "type": "number"
+          },
+          {
+            "name": "Margaric 17:0",
+            "type": "number"
+          },
+          {
+            "name": "Margaloeic 17:1",
+            "type": "number"
+          },
+          {
+            "name": "Stearic 18:0",
+            "type": "number"
+          },
+          {
+            "name": "Oleic 18:1",
+            "type": "number"
+          },
+          {
+            "name": "Ricinoleic 18:1",
+            "type": "number"
+          },
+          {
+            "name": "Linoleic 18:2",
+            "type": "number"
+          },
+          {
+            "name": "Linolenic 18:3",
+            "type": "number"
+          },
+          {
+            "name": "Arachidic 20:0",
+            "type": "number"
+          },
+          {
+            "name": "Eicosenoic 20:1",
+            "type": "number"
+          },
+          {
+            "name": "Behenic 22:0",
+            "type": "number"
+          },
+          {
+            "name": "Erucic 22:1",
+            "type": "number"
+          },
+          {
+            "name": "Lignoceric 24:0",
+            "type": "number"
+          },
+          {
+            "name": "Other",
+            "type": "number"
+          },
+          {
+            "name": "Total",
+            "type": "number"
+          },
+          {
+            "name": "Sources",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "fuel-properties",
+      "path": "data/fuel_properties.csv",
+      "title": "Fuel Properties of Various Oils and Fats",
+      "profile": "tabular-data-resource",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "schema": {
+        "fields": [
+          {
+            "name": "Fat",
+            "type": "string"
+          },
+          {
+            "name": "Variety or Processing",
+            "type": "string"
+          },
+          {
+            "name": "Viscosity mm^2/s @ 40 C ASTM-D 445, ASTM-D 88",
+            "type": "number"
+          },
+          {
+            "name": "Density kg/l @ 15.6 C ASTM-D 1298",
+            "type": "number"
+          },
+          {
+            "name": "Density kg/l @ 25 C",
+            "type": "number"
+          },
+          {
+            "name": "Surface Tension dynes/cm ASTM-D 971",
+            "type": "number"
+          },
+          {
+            "name": "Net Calorific Value MJ/kg",
+            "type": "number"
+          },
+          {
+            "name": "Gross Calorific Value MJ/kg ASTM-D 270",
+            "type": "number"
+          },
+          {
+            "name": "Cetane ASTM-D 613, ASTM-D 976",
+            "type": "number"
+          },
+          {
+            "name": "Cold filter clogging point C ASTM-EN 116, IP 309",
+            "type": "number"
+          },
+          {
+            "name": "Pour Point C ASTM-D 97",
+            "type": "number"
+          },
+          {
+            "name": "Cloud Point C ASTM-D 2500",
+            "type": "number"
+          },
+          {
+            "name": "Flash Point C ASTM-D 93",
+            "type": "number"
+          },
+          {
+            "name": "Fire point C",
+            "type": "number"
+          },
+          {
+            "name": "Auto-Ignition point",
+            "type": "number"
+          },
+          {
+            "name": "Initial Boiling Point, 0.1% evaporated C ASTM-D 86",
+            "type": "number"
+          },
+          {
+            "name": "Final Boiling Point, 99.5% evaporated C ASTM-D 86",
+            "type": "number"
+          },
+          {
+            "name": "Carbon residue % weight ASTM-D 189, ASTM-D 524",
+            "type": "number"
+          },
+          {
+            "name": "Ash % in weight ASTM-D 482",
+            "type": "number"
+          },
+          {
+            "name": "Particulate Matter mg/100 ml",
+            "type": "number"
+          },
+          {
+            "name": "Sediment content by the extraction method % volume ASTM-D 473",
+            "type": "number"
+          },
+          {
+            "name": "Insoluble impurities % weight AOCS Method Ca 3a-46",
+            "type": "number"
+          },
+          {
+            "name": "Unsaponifiable matter % weight AOCS Method Ca 6a-40",
+            "type": "number"
+          },
+          {
+            "name": "Water by Karl-Fischer % weight ASTM-D 1744",
+            "type": "number"
+          },
+          {
+            "name": "Water and sediment content % weight ASTM-D 1796",
+            "type": "number"
+          },
+          {
+            "name": "Moisture and volatiles by hotplate % weight AOCS Method Ca 2b-38",
+            "type": "number"
+          },
+          {
+            "name": "Moisture, Volatiles, Insolubles, and Unsaponifiables % weight",
+            "type": "number"
+          },
+          {
+            "name": "Free Fatty Acid % Weight as Oleic acid",
+            "type": "number"
+          },
+          {
+            "name": "Acid Value mg KOH/g",
+            "type": "number"
+          },
+          {
+            "name": "Iodine value g I/100g oil",
+            "type": "number"
+          },
+          {
+            "name": "Saturation Level",
+            "type": "number"
+          },
+          {
+            "name": "Peroxide number ppm Oxygen",
+            "type": "number"
+          },
+          {
+            "name": "Oxidation stability mg/100ml ASTM-D 2274",
+            "type": "number"
+          },
+          {
+            "name": "Jet Fuel Thermal Oxidation Test rating ASTM-D 3241",
+            "type": "number"
+          },
+          {
+            "name": "Induction Period",
+            "type": "number"
+          },
+          {
+            "name": "Copper Corrosion Rating ASTM-D 130",
+            "type": "number"
+          },
+          {
+            "name": "Saponification value mg KOH/g oil",
+            "type": "number"
+          },
+          {
+            "name": "Carbon % weight",
+            "type": "number"
+          },
+          {
+            "name": "Hydrogen % weight",
+            "type": "number"
+          },
+          {
+            "name": "Oxygen % weight",
+            "type": "number"
+          },
+          {
+            "name": "Sulfur % weight ASTM-D 1266, ASTM-D 129, IP 336",
+            "type": "number"
+          },
+          {
+            "name": "Nitrogen % weight",
+            "type": "number"
+          },
+          {
+            "name": "Phosphorus % weight AOCS Method Ca 12-55",
+            "type": "number"
+          },
+          {
+            "name": "Phosphorus PPM",
+            "type": "number"
+          },
+          {
+            "name": "Stochiometric air:fuel",
+            "type": "number"
+          },
+          {
+            "name": "Source",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "kinematic-viscosity",
+      "path": "data/centistoke.csv",
+      "title": "Kinematic Viscosity of Vegetable Oils at Different Temperatures (mm^2/s, cSt)",
+      "description": "Columns 3 onward are temperatures in degrees Celsius; cell values are kinematic viscosity in mm^2/s (centistokes).",
+      "profile": "tabular-data-resource",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "schema": {
+        "fields": [
+          {
+            "name": "Oil",
+            "type": "string"
+          },
+          {
+            "name": "Variety or Processing",
+            "type": "string"
+          },
+          {
+            "name": "0",
+            "type": "number"
+          },
+          {
+            "name": "4",
+            "type": "number"
+          },
+          {
+            "name": "10",
+            "type": "number"
+          },
+          {
+            "name": "20",
+            "type": "number"
+          },
+          {
+            "name": "23.9",
+            "type": "number"
+          },
+          {
+            "name": "25",
+            "type": "number"
+          },
+          {
+            "name": "27",
+            "type": "number"
+          },
+          {
+            "name": "30",
+            "type": "number"
+          },
+          {
+            "name": "38",
+            "type": "number"
+          },
+          {
+            "name": "40",
+            "type": "number"
+          },
+          {
+            "name": "45",
+            "type": "number"
+          },
+          {
+            "name": "48.9",
+            "type": "number"
+          },
+          {
+            "name": "50",
+            "type": "number"
+          },
+          {
+            "name": "60",
+            "type": "number"
+          },
+          {
+            "name": "65",
+            "type": "number"
+          },
+          {
+            "name": "70",
+            "type": "number"
+          },
+          {
+            "name": "75",
+            "type": "number"
+          },
+          {
+            "name": "80",
+            "type": "number"
+          },
+          {
+            "name": "82.2",
+            "type": "number"
+          },
+          {
+            "name": "90",
+            "type": "number"
+          },
+          {
+            "name": "99",
+            "type": "number"
+          },
+          {
+            "name": "100",
+            "type": "number"
+          },
+          {
+            "name": "110",
+            "type": "number"
+          },
+          {
+            "name": "Source",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "density",
+      "path": "data/densities.csv",
+      "title": "Density of Vegetable Oils at Different Temperatures (g/ml)",
+      "description": "Columns 2 onward are temperatures in degrees Celsius; cell values are density in g/ml.",
+      "profile": "tabular-data-resource",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "schema": {
+        "fields": [
+          {
+            "name": "Oils",
+            "type": "string"
+          },
+          {
+            "name": "23.9",
+            "type": "number"
+          },
+          {
+            "name": "37.8",
+            "type": "number"
+          },
+          {
+            "name": "48.9",
+            "type": "number"
+          },
+          {
+            "name": "60",
+            "type": "number"
+          },
+          {
+            "name": "82.2",
+            "type": "number"
+          },
+          {
+            "name": "100",
+            "type": "number"
+          },
+          {
+            "name": "110",
+            "type": "number"
+          }
+        ]
+      }
+    }
+  ]
+}

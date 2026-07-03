@@ -1,0 +1,107 @@
+BODY {
+  max-width: 40em;
+  margin: 30px auto;
+  padding-left: 20px;
+  padding-right: 20px;
+      }
+
+/* Data tables rendered from CSV by svo-table.js */
+.svo-table-scroll {
+  overflow-x: auto;
+  max-width: 100%;
+  margin: 1em 0;
+  border: 1px solid #e0e0e0;
+}
+.svo-data-table {
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+.svo-data-table caption {
+  caption-side: top;
+  text-align: left;
+  font-style: italic;
+  margin-bottom: 0.4em;
+}
+.svo-data-table th,
+.svo-data-table td {
+  border: 1px solid #ddd;
+  padding: 2px 6px;
+  text-align: right;
+  white-space: nowrap;
+}
+.svo-data-table thead th {
+  background: #f5f5f5;
+  vertical-align: bottom;
+  position: sticky;
+  top: 0;
+}
+.svo-data-table th small {
+  display: inline-block;
+  font-weight: normal;
+  color: #555;
+  font-size: 0.8em;
+}
+/* First two columns (name / variety / source) read as labels, left-aligned. */
+.svo-data-table td:first-child,
+.svo-data-table th:first-child,
+.svo-data-table td:nth-child(2),
+.svo-data-table th:nth-child(2) {
+  text-align: left;
+}
+.svo-data-table tbody tr:nth-child(even) {
+  background: #fafafa;
+}
+.svo-table-error {
+  color: #a00;
+}
+
+/* Interactive chart (Observable Plot) */
+figure.svo-figure {
+  margin: 1.5em 0;
+}
+figure.svo-figure figcaption {
+  font-style: italic;
+  margin-top: 0.4em;
+  color: #444;
+}
+#viscosity-plot {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* Tabular grid legend for the viscosity chart (viscosity-ordered). */
+.svo-legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1px 14px;
+  margin-top: 0.75em;
+  font-size: 0.8rem;
+}
+.svo-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 1px 2px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+.svo-legend-item:hover {
+  background: #f0f0f0;
+}
+.svo-legend-swatch {
+  flex: 0 0 auto;
+  width: 26px;
+  height: 8px;
+  overflow: visible;
+}
+.svo-legend-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.svo-legend-item.is-dim {
+  opacity: 0.35;
+}
+.svo-legend-item.is-on {
+  font-weight: 600;
+}

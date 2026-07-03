@@ -1,0 +1,13 @@
+{
+  "name": "svo-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "svo.bunkum.us — companion site and open data compilation for the book SVO: Powering Your Vehicle with Straight Vegetable Oil (Forest Gregg)",
+  "scripts": {
+    "dev": "wrangler pages dev",
+    "deploy": "wrangler pages deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.104.0"
+  }
+}

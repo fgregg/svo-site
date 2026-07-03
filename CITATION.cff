@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use this data, please cite it as below."
+title: "Fuel and Chemical Properties of Vegetable Oils: an open data compilation"
+type: dataset
+authors:
+  - family-names: Gregg
+    given-names: Forest
+abstract: >-
+  A curated compilation of the physical, chemical, and fuel properties of
+  vegetable oils and animal fats, drawn from roughly thirty papers in the
+  research literature and published as open CSV data with full citations.
+  Assembled for the book "SVO: Powering Your Vehicle with Straight Vegetable
+  Oil" by Forest Gregg. Covers fatty acid profiles, fuel properties, kinematic
+  viscosity vs. temperature, and density vs. temperature.
+keywords:
+  - vegetable oil
+  - straight vegetable oil
+  - SVO
+  - biodiesel
+  - fuel properties
+  - kinematic viscosity
+  - fatty acid profile
+  - density
+license: CC-BY-4.0
+url: "https://svo.bunkum.us/"
+repository-code: "https://github.com/fgregg/svo-site"
+version: "1.0.0"
+date-released: "2026-07-02"
+doi: 10.5281/zenodo.21152346
