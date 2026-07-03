@@ -99,15 +99,6 @@ figure.svo-figure figcaption {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-/* Reference key (diesel + ASTM ceiling): full-width rows above the oil grid. */
-.svo-legend-item.svo-legend-ref {
-  grid-column: 1 / -1;
-  font-weight: 600;
-  cursor: default;
-}
-.svo-legend-item.svo-legend-ref:hover {
-  background: transparent;
-}
 .svo-legend-item.is-dim {
   opacity: 0.35;
 }

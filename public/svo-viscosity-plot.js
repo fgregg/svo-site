@@ -65,7 +65,7 @@
   // repeat, so this is what makes the legend usable. Marks are tagged by DOM
   // order: Plot draws one <path> per curved oil in color-domain order, and one
   // <circle> per data point in data order.
-  function wireHighlight(chart, container, orderedOils, curvedOils, points, styleOf, references) {
+  function wireHighlight(chart, container, orderedOils, curvedOils, points, styleOf) {
     const SVGNS = "http://www.w3.org/2000/svg";
     function lineSwatch(color, dash, width) {
       const swatch = document.createElementNS(SVGNS, "svg");
@@ -103,18 +103,6 @@
     // the oil's color AND dash pattern so it matches its curve.
     const legend = document.createElement("div");
     legend.className = "svo-legend";
-
-    // Non-interactive reference key (diesel + ASTM ceiling), full-width rows on top.
-    (references || []).forEach((ref) => {
-      const item = document.createElement("div");
-      item.className = "svo-legend-item svo-legend-ref";
-      const label = document.createElement("span");
-      label.className = "svo-legend-label";
-      label.textContent = ref.label;
-      item.appendChild(lineSwatch(ref.color, ref.dash, ref.width));
-      item.appendChild(label);
-      legend.appendChild(item);
-    });
 
     const items = orderedOils.map((oil) => {
       const style = styleOf.get(oil) || { color: "#888", dash: "none" };
@@ -266,10 +254,6 @@
       for (let t = 0; t <= 100; t += 2) {
         dieselCurve.push({ temperature: t, viscosity: dieselViscosity(t) });
       }
-      const references = [
-        { label: "#2 diesel (Tat & Van Gerpen 1999)", color: DIESEL_COLOR, dash: "none", width: 2.5 },
-        { label: "ASTM D975 max — #2 diesel (4.1 cSt @ 40 °C)", color: ASTM_COLOR, dash: "5 4", width: 1.5 },
-      ];
 
       const width = Math.max(320, Math.min(720, container.clientWidth || 720));
 
@@ -345,7 +329,7 @@
       container.textContent = "";
       container.append(chart);
 
-      wireHighlight(chart, container, orderedOils, curvedOils, points, styleOf, references);
+      wireHighlight(chart, container, orderedOils, curvedOils, points, styleOf);
     })
     .catch(function (err) {
       container.textContent = "Could not load the chart: " + err.message;
