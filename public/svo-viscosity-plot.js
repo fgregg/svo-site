@@ -46,14 +46,40 @@
     return Math.pow(10, Math.pow(10, y)) - 0.7;
   }
 
+  // No. 2 diesel viscosity–temperature correlation from Tat & Van Gerpen (1999),
+  // JAOCS 76:1511–1513 (Table 2): ln(nu) = A + B/T + C/T^2, with T in kelvin and
+  // nu in cSt (mm^2/s). Valid ~ -14.4 to 100 °C. Drawn as a reference against the
+  // vegetable oils. The ASTM D975 spec ceiling for #2 diesel is 4.1 cSt at 40 °C.
+  const DIESEL = { A: 1.5029, B: -2316.0, C: 672200.0 };
+  const DIESEL_COLOR = "#111111";
+  const ASTM_COLOR = "#c1121f";
+  const ASTM_D975_MAX = 4.1;
+  function dieselViscosity(tC) {
+    const T = tC + KELVIN;
+    return Math.exp(DIESEL.A + DIESEL.B / T + DIESEL.C / (T * T));
+  }
+
   // Render a compact tabular (grid) legend below the chart, viscosity-ordered,
   // and wire hover-to-highlight: hovering an oil's legend cell or its curve
   // highlights that oil and dims the rest. With 27 oils the colors necessarily
   // repeat, so this is what makes the legend usable. Marks are tagged by DOM
   // order: Plot draws one <path> per curved oil in color-domain order, and one
   // <circle> per data point in data order.
-  function wireHighlight(chart, container, orderedOils, curvedOils, points, styleOf) {
+  function wireHighlight(chart, container, orderedOils, curvedOils, points, styleOf, references) {
     const SVGNS = "http://www.w3.org/2000/svg";
+    function lineSwatch(color, dash, width) {
+      const swatch = document.createElementNS(SVGNS, "svg");
+      swatch.setAttribute("class", "svo-legend-swatch");
+      swatch.setAttribute("viewBox", "0 0 26 8");
+      const line = document.createElementNS(SVGNS, "line");
+      line.setAttribute("x1", "1"); line.setAttribute("y1", "4");
+      line.setAttribute("x2", "25"); line.setAttribute("y2", "4");
+      line.setAttribute("stroke", color);
+      line.setAttribute("stroke-width", String(width || 2));
+      if (dash && dash !== "none") line.setAttribute("stroke-dasharray", dash);
+      swatch.appendChild(line);
+      return swatch;
+    }
     const lineG = chart.querySelector('g[aria-label="line"]');
     // Plot wraps each series path in an inner <g>, so query descendants.
     const linePaths = lineG ? Array.from(lineG.querySelectorAll("path")) : [];
@@ -77,29 +103,28 @@
     // the oil's color AND dash pattern so it matches its curve.
     const legend = document.createElement("div");
     legend.className = "svo-legend";
+
+    // Non-interactive reference key (diesel + ASTM ceiling), full-width rows on top.
+    (references || []).forEach((ref) => {
+      const item = document.createElement("div");
+      item.className = "svo-legend-item svo-legend-ref";
+      const label = document.createElement("span");
+      label.className = "svo-legend-label";
+      label.textContent = ref.label;
+      item.appendChild(lineSwatch(ref.color, ref.dash, ref.width));
+      item.appendChild(label);
+      legend.appendChild(item);
+    });
+
     const items = orderedOils.map((oil) => {
       const style = styleOf.get(oil) || { color: "#888", dash: "none" };
       const item = document.createElement("div");
       item.className = "svo-legend-item";
       item.__oil = oil;
-
-      const swatch = document.createElementNS(SVGNS, "svg");
-      swatch.setAttribute("class", "svo-legend-swatch");
-      swatch.setAttribute("viewBox", "0 0 26 8");
-      const line = document.createElementNS(SVGNS, "line");
-      line.setAttribute("x1", "1");
-      line.setAttribute("y1", "4");
-      line.setAttribute("x2", "25");
-      line.setAttribute("y2", "4");
-      line.setAttribute("stroke", style.color);
-      line.setAttribute("stroke-width", "2");
-      if (style.dash !== "none") line.setAttribute("stroke-dasharray", style.dash);
-      swatch.appendChild(line);
-
       const label = document.createElement("span");
       label.className = "svo-legend-label";
       label.textContent = oil;
-      item.appendChild(swatch);
+      item.appendChild(lineSwatch(style.color, style.dash, 2));
       item.appendChild(label);
       legend.appendChild(item);
       return item;
@@ -235,6 +260,17 @@
       const curvedSet = new Set(curve.map((c) => c.oil));
       const curvedOils = orderedOils.filter((o) => curvedSet.has(o));
 
+      // Reference #2 diesel curve (Tat & Van Gerpen 1999 correlation) plus the
+      // ASTM D975 spec ceiling, overlaid on the vegetable oils for comparison.
+      const dieselCurve = [];
+      for (let t = 0; t <= 100; t += 2) {
+        dieselCurve.push({ temperature: t, viscosity: dieselViscosity(t) });
+      }
+      const references = [
+        { label: "#2 diesel (Tat & Van Gerpen 1999)", color: DIESEL_COLOR, dash: "none", width: 2.5 },
+        { label: "ASTM D975 max — #2 diesel (4.1 cSt @ 40 °C)", color: ASTM_COLOR, dash: "5 4", width: 1.5 },
+      ];
+
       const width = Math.max(320, Math.min(720, container.clientWidth || 720));
 
       const chart = Plot.plot({
@@ -281,13 +317,35 @@
               d.series + "\n" + d.temperature + " °C, " + d.viscosity + " cSt",
             tip: true,
           }),
+          // Reference #2 diesel curve (drawn on top, bold black).
+          Plot.line(dieselCurve, {
+            x: "temperature",
+            y: "viscosity",
+            stroke: DIESEL_COLOR,
+            strokeWidth: 2.5,
+            clip: true,
+          }),
+          // ASTM D975 viscosity ceiling for #2 diesel (spec is at 40 °C).
+          Plot.ruleY([ASTM_D975_MAX], {
+            stroke: ASTM_COLOR,
+            strokeWidth: 1.5,
+            strokeDasharray: "5 4",
+          }),
+          Plot.text([{ x: 22, y: ASTM_D975_MAX, label: "ASTM D975 max, #2 diesel (40 °C)" }], {
+            x: "x", y: "y", text: "label",
+            textAnchor: "start", dy: -4, fill: ASTM_COLOR, fontSize: 10, clip: true,
+          }),
+          Plot.text([{ x: 66, y: dieselViscosity(66), label: "#2 diesel" }], {
+            x: "x", y: "y", text: "label",
+            textAnchor: "start", dx: 4, dy: -6, fill: DIESEL_COLOR, fontSize: 11, clip: true,
+          }),
         ],
       });
 
       container.textContent = "";
       container.append(chart);
 
-      wireHighlight(chart, container, orderedOils, curvedOils, points, styleOf);
+      wireHighlight(chart, container, orderedOils, curvedOils, points, styleOf, references);
     })
     .catch(function (err) {
       container.textContent = "Could not load the chart: " + err.message;
