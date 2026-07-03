@@ -46,18 +46,9 @@
     return Math.pow(10, Math.pow(10, y)) - 0.7;
   }
 
-  // No. 2 diesel viscosity–temperature correlation from Tat & Van Gerpen (1999),
-  // JAOCS 76:1511–1513 (Table 2): ln(nu) = A + B/T + C/T^2, with T in kelvin and
-  // nu in cSt (mm^2/s). Valid ~ -14.4 to 100 °C. Drawn as a reference against the
-  // vegetable oils. The ASTM D975 spec ceiling for #2 diesel is 4.1 cSt at 40 °C.
-  const DIESEL = { A: 1.5029, B: -2316.0, C: 672200.0 };
-  const DIESEL_COLOR = "#111111";
-  const ASTM_COLOR = "#c1121f";
+  // ASTM D975 kinematic-viscosity ceiling for No. 2 diesel: 4.1 mm^2/s (cSt) at
+  // 40 °C. Drawn as a solid black reference line across the chart.
   const ASTM_D975_MAX = 4.1;
-  function dieselViscosity(tC) {
-    const T = tC + KELVIN;
-    return Math.exp(DIESEL.A + DIESEL.B / T + DIESEL.C / (T * T));
-  }
 
   // Render a compact tabular (grid) legend below the chart, viscosity-ordered,
   // and wire hover-to-highlight: hovering an oil's legend cell or its curve
@@ -231,8 +222,11 @@
         if (!info.fit) return;
         const temps = info.pts.map((p) => p.temperature);
         const tmin = Math.min.apply(null, temps);
-        const tmax = Math.max.apply(null, temps);
-        if (tmax <= tmin) return;
+        const dataMax = Math.max.apply(null, temps);
+        if (dataMax <= tmin) return; // single temperature -> no line to draw
+        // Extend the MacCoull-Walther fit out to the axis max (140 °C),
+        // extrapolating past each oil's highest measured temperature.
+        const tmax = 140;
         const STEPS = 60;
         for (let i = 0; i <= STEPS; i++) {
           const t = tmin + ((tmax - tmin) * i) / STEPS;
@@ -248,13 +242,6 @@
       const curvedSet = new Set(curve.map((c) => c.oil));
       const curvedOils = orderedOils.filter((o) => curvedSet.has(o));
 
-      // Reference #2 diesel curve (Tat & Van Gerpen 1999 correlation) plus the
-      // ASTM D975 spec ceiling, overlaid on the vegetable oils for comparison.
-      const dieselCurve = [];
-      for (let t = 0; t <= 100; t += 2) {
-        dieselCurve.push({ temperature: t, viscosity: dieselViscosity(t) });
-      }
-
       const width = Math.max(320, Math.min(720, container.clientWidth || 720));
 
       const chart = Plot.plot({
@@ -266,7 +253,8 @@
         x: {
           label: "Temperature (°C / °F) →",
           grid: true,
-          nice: true,
+          // Out to 140 °C like the original PDF (oils' own curves end at their data).
+          domain: [0, 140],
           // Dual Celsius/Fahrenheit tick labels, like the original PDF (e.g. 40/104).
           tickFormat: (d) => d + "/" + Math.round((d * 9) / 5 + 32),
         },
@@ -301,27 +289,14 @@
               d.series + "\n" + d.temperature + " °C, " + d.viscosity + " cSt",
             tip: true,
           }),
-          // Reference #2 diesel curve (drawn on top, bold black).
-          Plot.line(dieselCurve, {
-            x: "temperature",
-            y: "viscosity",
-            stroke: DIESEL_COLOR,
-            strokeWidth: 2.5,
-            clip: true,
-          }),
           // ASTM D975 viscosity ceiling for #2 diesel (spec is at 40 °C).
           Plot.ruleY([ASTM_D975_MAX], {
-            stroke: ASTM_COLOR,
+            stroke: "#111111",
             strokeWidth: 1.5,
-            strokeDasharray: "5 4",
           }),
           Plot.text([{ x: 22, y: ASTM_D975_MAX, label: "ASTM D975 max, #2 diesel (40 °C)" }], {
             x: "x", y: "y", text: "label",
-            textAnchor: "start", dy: -4, fill: ASTM_COLOR, fontSize: 10, clip: true,
-          }),
-          Plot.text([{ x: 66, y: dieselViscosity(66), label: "#2 diesel" }], {
-            x: "x", y: "y", text: "label",
-            textAnchor: "start", dx: 4, dy: -6, fill: DIESEL_COLOR, fontSize: 11, clip: true,
+            textAnchor: "start", dy: -4, fill: "#111111", fontSize: 10, clip: true,
           }),
         ],
       });
