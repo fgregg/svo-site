@@ -248,6 +248,7 @@
         width: width,
         height: Math.round(width * 0.72),
         marginLeft: 52,
+        marginRight: 30,
         marginBottom: 42,
         style: { fontFamily: "inherit", fontSize: "12px", overflow: "visible" },
         x: {
