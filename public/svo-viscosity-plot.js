@@ -295,9 +295,9 @@
             stroke: "#111111",
             strokeWidth: 1.5,
           }),
-          Plot.text([{ x: 22, y: ASTM_D975_MAX, label: "ASTM D975 max, #2 diesel (40 °C)" }], {
+          Plot.text([{ x: 0, y: ASTM_D975_MAX, label: "ASTM D975 max, #2 diesel (40 °C)" }], {
             x: "x", y: "y", text: "label",
-            textAnchor: "start", dy: -4, fill: "#111111", fontSize: 10, clip: true,
+            textAnchor: "start", dx: 2, dy: -4, fill: "#111111", fontSize: 10, clip: true,
           }),
         ],
       });
